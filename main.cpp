@@ -1,4 +1,4 @@
-#include <iostream>
+п»ї#include <iostream>
 #include <string>
 #include "User.h"
 #include "LMStorage.h"
@@ -12,40 +12,40 @@ int registration(string& name, string& login, string& password, UserStorage& use
 	while (true)
 	{
 		int branch;
-		cout << "1 - регистрация\n2 - вход\n3 - выход из приложения\nваш ответ: ";
+		cout << "1 - СЂРµРіРёСЃС‚СЂР°С†РёСЏ\n2 - РІС…РѕРґ\n3 - РІС‹С…РѕРґ РёР· РїСЂРёР»РѕР¶РµРЅРёСЏ\nРІР°С€ РѕС‚РІРµС‚: ";
 		cin >> branch;
 
-		switch (branch) // регистрвация
+		switch (branch) // СЂРµРіРёСЃС‚СЂРІР°С†РёСЏ
 		{
 		case 1:
 			while (true)
 			{
-				cout << "Введите имя нового пользователя: ";
+				cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ РЅРѕРІРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ: ";
 				cin >> name;
-				cout << "Введите логин нового пользователя: ";
+				cout << "Р’РІРµРґРёС‚Рµ Р»РѕРіРёРЅ РЅРѕРІРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ: ";
 				cin >> login;
-				cout << "Введите пароль нового пользователя: ";
+				cout << "Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ РЅРѕРІРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ: ";
 				cin >> password;
 				if (userstorage.registerUser(login, password, name))
 				{
-					cout << "Вы зарегестрировались!" << endl;
+					cout << "Р’С‹ Р·Р°СЂРµРіРµСЃС‚СЂРёСЂРѕРІР°Р»РёСЃСЊ!" << endl;
 					return 1;
 				}
 				else
-					cout << "Мы не смогли вас зарегестрировать :(\nПопробуйте изменить логин" << endl;
+					cout << "РњС‹ РЅРµ СЃРјРѕРіР»Рё РІР°СЃ Р·Р°СЂРµРіРµСЃС‚СЂРёСЂРѕРІР°С‚СЊ :(\nРџРѕРїСЂРѕР±СѓР№С‚Рµ РёР·РјРµРЅРёС‚СЊ Р»РѕРіРёРЅ" << endl;
 			}
 		case 2:
 			while (true)
 			{
-				cout << "Введите логин: ";
+				cout << "Р’РІРµРґРёС‚Рµ Р»РѕРіРёРЅ: ";
 				cin >> login;
-				cout << "Введите пароль: ";
+				cout << "Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ: ";
 				cin >> password;
 
 				User* user = userstorage.get_user(login);
 				if (user == nullptr)
 				{
-					cout << "Мы не нашли такого пользователя :(\nМожет просто опечатка\nПопробуй еще? (1 - да  0 - нет): ";
+					cout << "РњС‹ РЅРµ РЅР°С€Р»Рё С‚Р°РєРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ :(\nРњРѕР¶РµС‚ РїСЂРѕСЃС‚Рѕ РѕРїРµС‡Р°С‚РєР°\nРџРѕРїСЂРѕР±СѓР№ РµС‰Рµ? (1 - РґР°  0 - РЅРµС‚): ";
 					bool tryit;
 					cin >> tryit;
 					if (!tryit)
@@ -54,7 +54,7 @@ int registration(string& name, string& login, string& password, UserStorage& use
 				else
 				{
 					name = user->get_name();
-					cout << "Вы вошли!" << endl;
+					cout << "Р’С‹ РІРѕС€Р»Рё!" << endl;
 					return 2;
 				}
 			}
@@ -64,7 +64,7 @@ int registration(string& name, string& login, string& password, UserStorage& use
 			break;
 
 		default:
-			cout << "Ты уверен что там такой выбор есть?" << endl;
+			cout << "РўС‹ СѓРІРµСЂРµРЅ С‡С‚Рѕ С‚Р°Рј С‚Р°РєРѕР№ РІС‹Р±РѕСЂ РµСЃС‚СЊ?" << endl;
 			break;
 		}
 	}	
@@ -73,9 +73,9 @@ int registration(string& name, string& login, string& password, UserStorage& use
 int main()
 {
 	setlocale(LC_ALL, "ru");
-	UserStorage userstorage; // классы чисто для взаимодействия
-	LMStorage lmstorage; // хранилище локальных сообщений
-	GlobalMessage globalMessage(&userstorage); // хранилище глобальных сообщений
+	UserStorage userstorage; // РєР»Р°СЃСЃС‹ С‡РёСЃС‚Рѕ РґР»СЏ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёСЏ
+	LMStorage lmstorage; // С…СЂР°РЅРёР»РёС‰Рµ Р»РѕРєР°Р»СЊРЅС‹С… СЃРѕРѕР±С‰РµРЅРёР№
+	GlobalMessage globalMessage(&userstorage); // С…СЂР°РЅРёР»РёС‰Рµ РіР»РѕР±Р°Р»СЊРЅС‹С… СЃРѕРѕР±С‰РµРЅРёР№
 	
 	while (true)
 	{
@@ -84,12 +84,12 @@ int main()
 		string password;
 
 		if (registration(name, login, password, userstorage) == 3)
-			return 0; // ебаные баги на 4
+			return 0; // РµР±Р°РЅС‹Рµ Р±Р°РіРё РЅР° 4
 		while (true)
 		{
 			int branch;
-			cout << "\n1 - написать в глобальные сообщение\n2 - написать в личные сообщения\n3 - вывести глобальные сообщения" 
-				<< "\n4 - вывести личное сообщение\n5 - выйти из аккаунта\nваш выбор: ";
+			cout << "\n1 - РЅР°РїРёСЃР°С‚СЊ РІ РіР»РѕР±Р°Р»СЊРЅС‹Рµ СЃРѕРѕР±С‰РµРЅРёРµ\n2 - РЅР°РїРёСЃР°С‚СЊ РІ Р»РёС‡РЅС‹Рµ СЃРѕРѕР±С‰РµРЅРёСЏ\n3 - РІС‹РІРµСЃС‚Рё РіР»РѕР±Р°Р»СЊРЅС‹Рµ СЃРѕРѕР±С‰РµРЅРёСЏ" 
+				<< "\n4 - РІС‹РІРµСЃС‚Рё Р»РёС‡РЅРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ\n5 - РІС‹Р№С‚Рё РёР· Р°РєРєР°СѓРЅС‚Р°\nРІР°С€ РІС‹Р±РѕСЂ: ";
 			cin >> branch;
 
 		
@@ -98,25 +98,25 @@ int main()
 			case 1:
 			{
 				globalMessage.PrintAll();
-				cout << "ваше сообщение: ";
+				cout << "РІР°С€Рµ СЃРѕРѕР±С‰РµРЅРёРµ: ";
 				string message;
 				cin >> message;
 				globalMessage.SendMessage(login, message);
 				break;
 			}
 
-			case 2: // здеся багули )
+			case 2: // Р·РґРµСЃСЏ Р±Р°РіСѓР»Рё )
 			{
-				for (int i = 0; i < userstorage.get_length(); i++) // вывожу всех users для выбора
+				for (int i = 0; i < userstorage.get_length(); i++) // РІС‹РІРѕР¶Сѓ РІСЃРµС… users РґР»СЏ РІС‹Р±РѕСЂР°
 				{
 					cout << i << " - " << userstorage[i]->get_name() << endl;
 				}
 				int user_number;
 				while (true) {
-					cout << "ваш выбор: ";
+					cout << "РІР°С€ РІС‹Р±РѕСЂ: ";
 					cin >> user_number;
 					if (!(user_number < userstorage.get_length()))
-						cout << "вы ввели немного не то, еще разок" << endl;
+						cout << "РІС‹ РІРІРµР»Рё РЅРµРјРЅРѕРіРѕ РЅРµ С‚Рѕ, РµС‰Рµ СЂР°Р·РѕРє" << endl;
 					else
 						break;
 				}
@@ -124,7 +124,7 @@ int main()
 				LocalMessage* lm = lmstorage.getLM(login, userstorage[user_number]->get_login());
 				if (lm != nullptr) { lm->PrintAllMessage(); }
 				else { lmstorage.addLM(userstorage.get_user(login), userstorage[user_number]); }
-				cout << "ваше сообщение: ";
+				cout << "РІР°С€Рµ СЃРѕРѕР±С‰РµРЅРёРµ: ";
 				string message;
 				cin >> message;
 
@@ -137,18 +137,18 @@ int main()
 				globalMessage.PrintAll();
 				break;
 
-			case 4: // тута багуязина
+			case 4: // С‚СѓС‚Р° Р±Р°РіСѓСЏР·РёРЅР°
 			{
-				for (int i = 0; i < userstorage.get_length(); i++) // вывожу всех users для выбора
+				for (int i = 0; i < userstorage.get_length(); i++) // РІС‹РІРѕР¶Сѓ РІСЃРµС… users РґР»СЏ РІС‹Р±РѕСЂР°
 				{
 					cout << i << " - " << userstorage[i]->get_name() << endl;
 				}
 				int user_number;
 				while (true) {
-					cout << "ваш выбор: ";
+					cout << "РІР°С€ РІС‹Р±РѕСЂ: ";
 					cin >> user_number;
 					if (!(user_number < userstorage.get_length()))
-						cout << "вы ввели немного не то, еще разок" << endl;
+						cout << "РІС‹ РІРІРµР»Рё РЅРµРјРЅРѕРіРѕ РЅРµ С‚Рѕ, РµС‰Рµ СЂР°Р·РѕРє" << endl;
 					else
 						break;
 				}
@@ -156,7 +156,7 @@ int main()
 				cout << endl;
 				LocalMessage* lm = lmstorage.getLM(login, userstorage[user_number]->get_login());
 				if (lm != nullptr) { lm->PrintAllMessage(); }
-				else { cout << "Пока между вами переписки нет" << endl; }
+				else { cout << "РџРѕРєР° РјРµР¶РґСѓ РІР°РјРё РїРµСЂРµРїРёСЃРєРё РЅРµС‚" << endl; }
 				break;
 			}
 
@@ -166,7 +166,7 @@ int main()
 				break;
 
 			default:
-				cout << "Давай без опечаток, еще разок ;)" << endl;
+				cout << "Р”Р°РІР°Р№ Р±РµР· РѕРїРµС‡Р°С‚РѕРє, РµС‰Рµ СЂР°Р·РѕРє ;)" << endl;
 				break;
 			}
 			cout << endl;
