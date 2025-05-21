@@ -27,7 +27,7 @@ class ConectToServer // класс для взаимодействия с сер
         //int setSocketData();
 
         int userRegistration(std::string login, std::string password, std::string name);
-        int login(std::string login, std::string password, std::string name);
+        int login(std::string login, std::string password);
         int sendLM(std::string message, std::string login_sender, std::string login_recipient);
         int sendGM(std::string message, std::string login_sender);
 };

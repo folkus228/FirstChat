@@ -87,7 +87,7 @@ int main()
 		string password;
 
 		if (registration(name, login, password, userstorage) == 3)
-			return 0; // ебаные баги на 4
+			return 0; // баги на 4
 		while (true)
 		{
 			int branch;

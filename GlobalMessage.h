@@ -21,6 +21,7 @@ public:
 	GlobalMessage(UserStorage* userstorage);
 
 	void SendMessage(std::string login, std::string message);
+	std::string& createStringChat();
 	void PrintAll();
 };
 

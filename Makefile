@@ -2,7 +2,7 @@ all: main
 
 main:	client.cpp UserStorage LocalMessage LMStorage GlobalMessage ConectToServer
 		g++ -o client client.cpp -L. -lUser -lUserStorage -lLocalMessage -lLMStorage -lGlobalMessage -lConectToServer
-		g++ -o server server.cpp -L. -lUser -lUserStorage -lLocalMessage -lLMStorage -lGlobalMessage
+		g++ -o server server.cpp -L. -lUser -lUserStorage -lLMStorage -lLocalMessage -lGlobalMessage
 
 
 ConectToServer:	ConectToServer.h ConectToServer.cpp

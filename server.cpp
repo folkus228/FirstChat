@@ -79,9 +79,26 @@ int main()
 		{
 		case 'i': // login to account
 		{
-			string curent_s;
-			iss >> curent_s;
-			cout << "debug: curent_s = " << curent_s << endl;
+			string login;
+			string password;
+			iss >> login; // скипаем первый символ
+
+			iss >> login;
+			iss >> password;
+
+			cout << "debug: login = " << login << endl;
+			cout << "debug: password = " << password << endl;
+
+			User* user = userstorage.get_user(login);
+			if (user == nullptr)
+				send(client_fd, new char('1'), 1, 0); // неудачно
+			else if(user->get_password() == password) { // вход
+				string message = "0 " + user->get_name();
+				send(client_fd, &message[0], message.size(), 0);
+			}
+			else
+				send(client_fd, new char('2'), 1, 0); // неудачно
+
 			break;
 		}
 
@@ -134,6 +151,22 @@ int main()
 		}
 
 		case 'g': // send Global message
+		{
+			string curent_s;
+			iss >> curent_s;
+			cout << "debug: curent_s = " << curent_s << endl;
+			break;
+		}
+		
+		case 'p': // send local message
+		{
+			string curent_s;
+			iss >> curent_s;
+			cout << "debug: curent_s = " << curent_s << endl;
+			break;
+		}
+		
+		case 'P': // send global message
 		{
 			string curent_s;
 			iss >> curent_s;

@@ -47,9 +47,12 @@ int ConectToServer::userRegistration(std::string login, std::string password, st
 	return (int)buffer[0]; // 0 - удачно  1 - неудачно
 }
 
-int ConectToServer::login(std::string login, std::string password, std::string name)
+int ConectToServer::login(std::string login, std::string password)
 {
-	return 1;
+	std::string request = "i " + login + " " + password;
+	send(_socket, request.c_str(), request.size(), 0);
+	ssize_t len = recv(_socket, buffer, sizeof(buffer), 0);
+	return (int)buffer[0]; // 0 - удачно  1 - неудачно 2 - неверный пароль
 }
 
 int ConectToServer::sendLM(std::string message, std::string login_sender, std::string login_recipient)
