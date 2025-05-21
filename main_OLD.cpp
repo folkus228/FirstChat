@@ -1,10 +1,12 @@
 ﻿#include <iostream>
 #include <string>
+#include <cstring>
 #include "User.h"
 #include "LMStorage.h"
 #include "UserStorage.h"
 #include "LocalMessage.h"
 #include "GlobalMessage.h"
+#include "ConectToServer.h"
 using namespace std;
 
 int registration(string& name, string& login, string& password, UserStorage& userstorage)
@@ -73,10 +75,11 @@ int registration(string& name, string& login, string& password, UserStorage& use
 int main()
 {
 	setlocale(LC_ALL, "ru");
-	UserStorage userstorage; // классы чисто для взаимодействия
-	LMStorage lmstorage; // хранилище локальных сообщений
-	GlobalMessage globalMessage(&userstorage); // хранилище глобальных сообщений
+	UserStorage userstorage; // просто vector юзеров
+	LMStorage lmstorage; // хранилище локальных сообщений и просто vector LM
+	GlobalMessage globalMessage(&userstorage); // хранилище глобальных сообщений (чат)
 	
+
 	while (true)
 	{
 		string name;

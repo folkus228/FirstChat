@@ -1,5 +1,5 @@
 #include "UserStorage.h"
-#include<vector>
+#include <vector>
 
 UserStorage::UserStorage() {}
 
@@ -11,7 +11,7 @@ UserStorage::~UserStorage()
     }
 }
 
-bool UserStorage::registerUser(const std::string& login, const std::string& password, const std::string& name) // создает пользователя // если может то true если нет то false
+bool UserStorage::registerUser(const std::string& login, const std::string& password, const std::string& name) // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ true пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ false
 {
     users.push_back(new User(login ,password, name));
     for (int i = 0; i < users.size()-1; i++)
@@ -38,10 +38,10 @@ User* UserStorage::get_user(const std::string& login)
     {
         if (users[i]->get_login() == login)
         {
-            return users[i];; // если успешно то возвращает номер user'а из массива
+            return users[i];; // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ user'пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         }
     }
-    return nullptr; // возвращает при ошибке
+    return nullptr; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 }
 
 User* UserStorage::get_user(const std::string&& login)
@@ -50,10 +50,10 @@ User* UserStorage::get_user(const std::string&& login)
     {
         if (users[i]->get_login() == login)
         {
-            return users[i];; // если успешно то возвращает номер user'а из массива
+            return users[i];; // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ user'пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         }
     }
-    return nullptr; // возвращает при ошибке
+    return nullptr; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     
 }
 
@@ -67,7 +67,7 @@ User* UserStorage::login(const std::string& login, const std::string& password) 
     throw std::runtime_error("Invalid login or password");
 }
 
-User* UserStorage::operator[](int i) // возвращает ссылку, но есл нет доступа то nullptr
+User* UserStorage::operator[](int i) // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ nullptr
 {
     if (i < users.size())
         return users[i];

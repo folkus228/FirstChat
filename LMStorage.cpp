@@ -1,11 +1,12 @@
+#include "LocalMessage.h"
 #include "LMStorage.h"
 
-void LMStorage::addLM(User* user1, User* user2) // дбавляет переписку
+void LMStorage::addLM(User* user1, User* user2) // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 {
 	lms.push_back(new LocalMessage(user1, user2));
 }
 
-std::vector<LocalMessage*> LMStorage::getAllLM(std::string login) // возвращает все личные переписки пользователя
+std::vector<LocalMessage*> LMStorage::getAllLM(std::string login) // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 {
 	std::vector<LocalMessage*> returnLM;
 	for (size_t i = 0; i < lms.size(); i++)
@@ -22,7 +23,7 @@ std::vector<LocalMessage*> LMStorage::getAllLM(std::string login) // возвращает 
 	return returnLM;
 }
 
-LocalMessage* LMStorage::getLM(std::string login1, std::string login2) // возвращает конкретную переписку
+LocalMessage* LMStorage::getLM(std::string login1, std::string login2) // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 {
 	for (size_t i = 0; i < lms.size(); i++)
 	{

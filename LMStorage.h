@@ -6,7 +6,7 @@ class LMStorage
 private:
 	std::vector<LocalMessage*> lms;
 public:
-	LMStorage() = default;
+	//LMStorage() = default;
 	~LMStorage();
 
 	void addLM(User* user1, User* user2);

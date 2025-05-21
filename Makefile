@@ -1,9 +1,13 @@
-all: clean
+all: main
 
-main:	main.cpp UserStorage LocalMessage LMStorage GlobalMessage
-		g++ -o main main.cpp -L. -lUser -lUserStorage -lLocalMessage -lLMStorage -lGlobalMessage
+main:	client.cpp UserStorage LocalMessage LMStorage GlobalMessage ConectToServer
+		g++ -o client client.cpp -L. -lUser -lUserStorage -lLocalMessage -lLMStorage -lGlobalMessage -lConectToServer
+		g++ -o server server.cpp -L. -lUser -lUserStorage -lLocalMessage -lLMStorage -lGlobalMessage
 
 
+ConectToServer:	ConectToServer.h ConectToServer.cpp
+	g++ -o ConectToServer.o ConectToServer.cpp -c
+	ar rc libConectToServer.a ConectToServer.o
 
 GlobalMessage:	UserStorage GlobalMessage.h GlobalMessage.cpp
 	g++ -o GlobalMessage.o GlobalMessage.cpp -c
@@ -29,6 +33,6 @@ User:	User.h
 	g++ -o User.o User.cpp -c
 	ar rcs libUser.a User.o
 
-clean: main
+clean:
 	rm *.o
 	rm *.a
