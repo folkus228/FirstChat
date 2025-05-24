@@ -22,6 +22,7 @@ class ConectToServer // класс для взаимодействия с сер
         ConectToServer(/* args */);
         ~ConectToServer();
         
+        int initAddr();
         int initSocket();
 
         int userRegistration(std::string login, std::string password, std::string name);

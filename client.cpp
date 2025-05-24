@@ -45,7 +45,10 @@ int registration(string& name, string& login, string& password, ConectToServer& 
 				cout << "Введите пароль: ";
 				cin >> password;
 
+				cout << "waiting request ..." << endl;
 				name = CTS.login(login, password);
+				cout << "response: " << name << endl;
+
 				if (name == "1")
 				{
 					cout << "Мы не нашли такого пользователя :(\nМожет просто опечатка\nПопробуй еще? (1 - да  0 - нет): ";
@@ -84,7 +87,6 @@ int main()
 {
 	setlocale(LC_ALL, "ru");
 	ConectToServer CTS; // помошник для общения с сервером
-	CTS.initSocket();
 
 	while (true)
 	{
@@ -93,7 +95,7 @@ int main()
 		string password;
 
 		if (registration(name, login, password, CTS) == 3)
-			return 0; // баги на 4
+			return 0;
 		while (true)
 		{
 			int branch;
@@ -120,9 +122,10 @@ int main()
 				cout << "login получателя: ";
 				cin >> login_recipient;
 					
-				cout << "ваше сообщение: ";
 				string message;
+				cout << "ваше сообщение: ";
 				cin >> message;
+				cout << "Введено: " << message << endl;
 				
 				if (CTS.sendLM(message, login, login_recipient))
 					cout << "Что-то не так :(" << endl;
@@ -134,7 +137,7 @@ int main()
 			}
 
 			case 3:
-				cout << CTS.getGM() << endl;
+				cout << endl << CTS.getGM();
 				break;
 
 			case 4:

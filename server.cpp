@@ -38,19 +38,21 @@ int main()
 		std::cerr << "Bind failed\n";
 		return -1;
 	}
-
+	
 	// 4. Слушаем входящие соединения
 	if (listen(server_socket, 3) == -1) {
 		std::cerr << "Listen failed\n";
 		return -1;
 	}
-
-	std::cout << "Server is listening on port " << PORT << "...\n";
-
 	char buffer[1024];
 	sockaddr_in client_addr;
 	while (true)
 	{
+		
+
+		std::cout << "Server is listening on port " << PORT << "...\n";
+
+	
 		string name;
 		string login;
 		string password;		
@@ -90,15 +92,19 @@ int main()
 			cout << "debug: password = " << password << endl;
 
 			User* user = userstorage.get_user(login);
-			if (user == nullptr)
+			if (user == nullptr){
 				send(client_fd, new char('1'), 1, 0); // неудачно
+				cout << "user is not found" << endl;
+			}
 			else if(user->get_password() == password) { // вход
 				string message = "0 " + user->get_name();
 				send(client_fd, &message[0], message.size(), 0);
+				cout << "user login successfully!" << endl;
 			}
-			else
+			else{
 				send(client_fd, new char('2'), 1, 0); // неудачно
-
+				cout << "password is not true" << endl;
+			}
 			break;
 		}
 
@@ -117,11 +123,14 @@ int main()
 			cout << "debug: password = " << *password << endl;
 			cout << "debug: name = " << *name << endl;
 
-			if (userstorage.registerUser(*login, *password, *name))
+			if (userstorage.registerUser(*login, *password, *name)){
 				send(client_fd, new char('0'), 1, 0); // успешно
-			else
+				cout << "user added successfully!" << endl;
+			}
+			else{
 				send(client_fd, new char('1'), 1, 0); // неудачно
-
+				cout << "user not added." << endl;
+			}
 			break;
 		}
 
@@ -248,7 +257,7 @@ int main()
 
 		// 7. Закрываем соединение
 		close(client_fd);
-		close(server_socket);
+		//close(server_socket);
 		cout << "\nRestart cycle\n" << endl;
 	}
     return 0;
