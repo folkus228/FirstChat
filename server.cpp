@@ -104,6 +104,7 @@ int main()
 
 		case 'c': // Create new user
 		{
+			cout << "\"c\" is working ..." << endl;
 			string* login = new string;
 			string* password = new string;
 			string* name = new string;
@@ -123,7 +124,8 @@ int main()
 
 			break;
 		}
-		case 'l': // send Local message
+
+		case 'l': // send in Local message
 		{
 			int words_count;
 			string message;
@@ -141,47 +143,108 @@ int main()
 				iss >> str_buf;
 				message = message + " " + str_buf;
 			}
+
+			try
+			{
+				cout << "debug: words_count = " << words_count << endl;
+				cout << "debug: login_sender = " << login_sender << endl;
+				cout << "debug: login_recipient = " << login_recipient << endl;
+				cout << "debug: message = " << message << endl;
+
+				LocalMessage* lm = lmstorage.getLM(login_sender, login_recipient);
+				if (lm != nullptr) { lm->PrintAllMessage(); }
+				else 
+				{ 
+					lmstorage.addLM(userstorage.get_user(login_sender), userstorage.get_user(login_recipient)); 
+				}
+				lmstorage.getLM(login_sender, login_recipient)->SendMessage(login_sender, message);
+
+				send(client_fd, new char('0'), 1, 0);
+			}
+			catch(const std::exception& e)
+			{
+				std::cerr << e.what() << '\n';
+				send(client_fd, new char('1'), 1, 0);
+			}
+
+			break;
+		}
+
+		case 'g': // send in Global message
+		{
+			int words_count;
+			string message;
+			string login_sender;
+			iss >> message; // скипаем первый символ
+
+			iss >> words_count;
+			iss >> login_sender;
+			iss >> message;
+			for (int i = 0; i < words_count - 1; i++)
+			{
+				string str_buf;
+				iss >> str_buf;
+				message = message + " " + str_buf;
+			}
 			
 			cout << "debug: words_count = " << words_count << endl;
 			cout << "debug: login_sender = " << login_sender << endl;
-			cout << "debug: login_recipient = " << login_recipient << endl;
 			cout << "debug: message = " << message << endl;
 
+			if(!userstorage.get_user(login_sender))
+				send(client_fd, new char('1'), 1, 0);
+			else
+			{
+				globalMessage.SendMessage(login_sender, message);
+				send(client_fd, new char('0'), 1, 0);
+			}
 			break;
 		}
+		
+		case 'p': // send local message text to user
+		{
+			string login1;
+			string login2;
+			iss >> login1; // скипаем
 
-		case 'g': // send Global message
-		{
-			string curent_s;
-			iss >> curent_s;
-			cout << "debug: curent_s = " << curent_s << endl;
+			iss >> login1;
+			iss >> login2;
+
+			cout << "debug: login1 = " << login1 << endl;
+			cout << "debug: login2 = " << login2 << endl;
+
+			try
+			{
+				LocalMessage* lm = lmstorage.getLM(login1, login2);
+				string answer = lm->getAllMsg();
+			
+				send(client_fd, &answer[0], answer.size(), 0);
+			}
+			catch(const std::exception& e)
+			{
+				cerr << e.what() << '\n';
+				string answer = "Login is not valid";
+				send(client_fd, &answer[0], answer.size(), 0);
+			}		
+
 			break;
 		}
 		
-		case 'p': // send local message
+		case 'P': // send global message text to user
 		{
-			string curent_s;
-			iss >> curent_s;
-			cout << "debug: curent_s = " << curent_s << endl;
-			break;
-		}
-		
-		case 'P': // send global message
-		{
-			string curent_s;
-			iss >> curent_s;
-			cout << "debug: curent_s = " << curent_s << endl;
+			string tag;
+			iss >> tag; // скипаем
+
+			string answer = globalMessage.createStringChat();
+
+			send(client_fd, &answer[0], answer.size(), 0);
+			
 			break;
 		}
 		
 		default:
 			break;
-		}
-
-		// Отправляем подтверждение обратно клиенту
-		std::string response = "Received: " + std::string(buffer);
-		send(client_fd, response.c_str(), response.size(), 0);
-		
+		}		
 
 		// 7. Закрываем соединение
 		close(client_fd);

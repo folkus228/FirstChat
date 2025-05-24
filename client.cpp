@@ -9,7 +9,7 @@
 #include "ConectToServer.h"
 using namespace std;
 
-int registration(string& name, string& login, string& password, UserStorage& userstorage)
+int registration(string& name, string& login, string& password, ConectToServer& CTS)
 {
 	while (true)
 	{
@@ -28,7 +28,8 @@ int registration(string& name, string& login, string& password, UserStorage& use
 				cin >> login;
 				cout << "Введите пароль нового пользователя: ";
 				cin >> password;
-				if (userstorage.registerUser(login, password, name))
+				cout << endl;
+				if (!CTS.userRegistration(login, password, name))
 				{
 					cout << "Вы зарегестрировались!" << endl;
 					return 1;
@@ -44,8 +45,8 @@ int registration(string& name, string& login, string& password, UserStorage& use
 				cout << "Введите пароль: ";
 				cin >> password;
 
-				User* user = userstorage.get_user(login);
-				if (user == nullptr)
+				name = CTS.login(login, password);
+				if (name == "1")
 				{
 					cout << "Мы не нашли такого пользователя :(\nМожет просто опечатка\nПопробуй еще? (1 - да  0 - нет): ";
 					bool tryit;
@@ -53,9 +54,16 @@ int registration(string& name, string& login, string& password, UserStorage& use
 					if (!tryit)
 						break;
 				}
+				else if (name == "2")
+				{
+					cout << "Неверный пароль :(\nМожет просто опечатка\nПопробуй еще? (1 - да  0 - нет): ";
+					bool tryit;
+					cin >> tryit;
+					if (!tryit)
+						break;
+				}
 				else
 				{
-					name = user->get_name();
 					cout << "Вы вошли!" << endl;
 					return 2;
 				}
@@ -75,10 +83,8 @@ int registration(string& name, string& login, string& password, UserStorage& use
 int main()
 {
 	setlocale(LC_ALL, "ru");
-	UserStorage userstorage; // просто vector юзеров
-	LMStorage lmstorage; // хранилище локальных сообщений и просто vector LM
-	GlobalMessage globalMessage(&userstorage); // хранилище глобальных сообщений (чат)
 	ConectToServer CTS; // помошник для общения с сервером
+	CTS.initSocket();
 
 	while (true)
 	{
@@ -86,7 +92,7 @@ int main()
 		string login;
 		string password;
 
-		if (registration(name, login, password, userstorage) == 3)
+		if (registration(name, login, password, CTS) == 3)
 			return 0; // баги на 4
 		while (true)
 		{
@@ -100,63 +106,46 @@ int main()
 			{
 			case 1:
 			{
-				globalMessage.PrintAll();
+				cout << CTS.getGM() << endl;
 				cout << "ваше сообщение: ";
 				string message;
 				cin >> message;
-				globalMessage.SendMessage(login, message);
+				CTS.sendGM(message, login);
 				break;
 			}
 
-			case 2: // здеся багули )
+			case 2:
 			{
-				for (int i = 0; i < userstorage.get_length(); i++) // вывожу всех users для выбора
-				{
-					cout << i << " - " << userstorage[i]->get_name() << endl;
-				}
-				int user_number;
-				while (true) {
-					cout << "ваш выбор: ";
-					cin >> user_number;
-					if (!(user_number < userstorage.get_length()))
-						cout << "вы ввели немного не то, еще разок" << endl;
-					else
-						break;
-				}
-				
+				string login_recipient;
+				cout << "login получателя: ";
+				cin >> login_recipient;
+					
 				cout << "ваше сообщение: ";
 				string message;
 				cin >> message;
+				
+				if (CTS.sendLM(message, login, login_recipient))
+					cout << "Что-то не так :(" << endl;
+				else
+					cout << "Сообщение улетело ;)" << endl;
 
-				CTS.sendLM(message, login, userstorage[user_number]->get_login());
 				cout << endl;
 				break;
 			}
 
 			case 3:
-				globalMessage.PrintAll();
+				cout << CTS.getGM() << endl;
 				break;
 
-			case 4: // тута багуязина
+			case 4:
 			{
-				for (int i = 0; i < userstorage.get_length(); i++) // вывожу всех users для выбора
-				{
-					cout << i << " - " << userstorage[i]->get_name() << endl;
-				}
-				int user_number;
-				while (true) {
-					cout << "ваш выбор: ";
-					cin >> user_number;
-					if (!(user_number < userstorage.get_length()))
-						cout << "вы ввели немного не то, еще разок" << endl;
-					else
-						break;
-				}
-
+				string user_login;
+				cout << "login этого пользователя: ";
+				cin >> user_login;	
 				cout << endl;
-				LocalMessage* lm = lmstorage.getLM(login, userstorage[user_number]->get_login());
-				if (lm != nullptr) { lm->PrintAllMessage(); }
-				else { cout << "Пока между вами переписки нет" << endl; }
+
+				cout << CTS.getLM(login, user_login) << endl;
+				
 				break;
 			}
 

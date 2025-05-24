@@ -13,6 +13,21 @@ LocalMessage::~LocalMessage()
 	}
 }
 
+std::string LocalMessage::getAllMsg()
+{
+	std::string allChat = "";
+
+	if (!(0 < _message.size()))
+		return allChat;
+	
+	for (int i = 0; i < _message.size(); i++)
+	{
+		allChat += _message[i]->_name + ": " + _message[i]->_message + "\n";
+	}
+
+	return  allChat;
+}
+
 void LocalMessage::PrintAllMessage()
 {
 	if (!(0 < _message.size()))

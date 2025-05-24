@@ -24,7 +24,7 @@ public:
 	~LocalMessage();
 
 
-
+	std::string getAllMsg();
 	void PrintAllMessage();
 	void SendMessage(std::string login, std::string message);
 };

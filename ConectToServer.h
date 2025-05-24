@@ -10,11 +10,11 @@
 class ConectToServer // класс для взаимодействия с сервером и соединением
 {
     private:
-        std::string SERVER_IP = "127.0.0.1";
+        std::string SERVER_IP = "192.168.0.25";
         sockaddr_in _server_addr;
         int _socket;
 
-        char buffer[1024];
+        char buffer[2048];
         
     public:
         int PORT = 8080;
@@ -23,11 +23,11 @@ class ConectToServer // класс для взаимодействия с сер
         ~ConectToServer();
         
         int initSocket();
-        int Conect();
-        //int setSocketData();
 
         int userRegistration(std::string login, std::string password, std::string name);
-        int login(std::string login, std::string password);
+        std::string login(std::string login, std::string password);
         int sendLM(std::string message, std::string login_sender, std::string login_recipient);
         int sendGM(std::string message, std::string login_sender);
+        std::string getLM(std::string login1, std::string login2);
+        std::string getGM();
 };
